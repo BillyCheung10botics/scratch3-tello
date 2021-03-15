@@ -323,6 +323,10 @@ ipcMain.once('tello-initialize', () => {
     telloProcessor.initialize();
 });
 
+ipcMain.once('connect', () => {
+    telloProcessor.connect();
+});
+
 ipcMain.on('send', (ev, arg) => {
     telloProcessor.request(arg);
 });

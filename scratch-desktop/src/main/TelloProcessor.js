@@ -46,6 +46,26 @@ class TelloProcessor {
         this.server.bind(8890, '0.0.0.0');
     }
     
+    connect () {
+        this.queue = [] // clear the queue
+        this.send('command');
+        this.executing = true;
+
+        this.client.on('message', (message, remote) => {
+            const readableMessage = message.toString();
+            
+            // Previous command executed
+            if (readableMessage === 'error' || readableMessage === 'ok') {
+                this.executing = false;
+
+                // Dequeue
+                this.queue.shift();
+
+                // Send the next element
+                this.inquire();
+            }
+        });
+    }
 
     request (cmd) {
         // Enqueue
