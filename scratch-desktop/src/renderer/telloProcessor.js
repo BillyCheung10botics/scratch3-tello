@@ -7,7 +7,7 @@ export class TelloProcessor {
     }
 
     connect () {
-        ipcRenderer.send('connect', cmd);
+        ipcRenderer.send('connect');
     }
 
     send (cmd) {
